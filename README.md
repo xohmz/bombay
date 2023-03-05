@@ -1,6 +1,6 @@
 # Bombay - Monstercat API Bindings
 
-![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/xohmz/bombay/Rust?branch=main)
+![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/xohmz/bombay/rust.yml?branch=main)
 ![Crates.io](https://img.shields.io/crates/v/bombay)
 ![Crates.io (latest)](https://img.shields.io/crates/dv/bombay)
 
@@ -51,7 +51,7 @@ There is not full coverage of endpoints and endpoint options/parameters.
 
 There are some examples in the [Bombay docs.rs page][docs]. More will be added
 as I have time. Please navigate the various modules and structs to see how to
-use them. Not all functions have examples. More will be added as I have time.
+use them. Not all functions have examples.
 
 There are integration tests to attempt to catch changes to the Monstercat API,
 and to serve as more examples of how to use the library.  More will be added as
