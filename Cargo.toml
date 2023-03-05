@@ -1,6 +1,6 @@
 [package]
 name = "bombay"
-version = "0.0.1"
+version = "0.0.2"
 description = "Monstercat API Rust client"
 categories = ["api-bindings"]
 keywords = ["bombay", "monstercat", "api", "client"]
@@ -21,7 +21,6 @@ serde = { version = "1.0" }
 serde_json = "1.0"
 serde_repr = "0.1.10"
 serde_with = "2.2.0"
-tokio = { version = "1", features = ["full"] }
 ureq = { version = "2.4.0", features = ["json", "cookies"] }
 uuid = { version = "1.2.2", features = ["serde"] }
 url = { version = "2.3.1", features = ["serde"] }
