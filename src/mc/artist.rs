@@ -153,7 +153,7 @@ pub struct AlbumArtist {
     pub artist_id: Uuid,
     pub artist_number: usize,
     pub name: String,
-    pub profile_file_id: Uuid,
+    pub profile_file_id: Option<Uuid>,
     pub platform: String,
     pub public: bool,
     pub release_id: ReleaseID,
@@ -170,7 +170,7 @@ pub struct ReleaseArtist {
     pub catalog_record_id: String,
     pub id: Uuid,
     pub name: String,
-    pub profile_file_id: Uuid,
+    pub profile_file_id: Option<Uuid>,
     pub public: bool,
     pub role: String,
     #[serde(alias = "URI")]
