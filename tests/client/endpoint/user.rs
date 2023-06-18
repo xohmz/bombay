@@ -86,7 +86,7 @@ fn get_user_info_2fa_email_login() -> Result<(), Error> {
 fn get_totp_qr_code_image() -> Result<(), Error> {
     let mut reader = AUTHED_CLIENT.user().get_totp_qr_code_image()?;
 
-    let _dir = fs::create_dir_all("downloads").unwrap();
+    fs::create_dir_all("downloads").unwrap();
     let mut file_out = fs::File::create("downloads/qr_code.png").unwrap();
 
     match std::io::copy(&mut reader, &mut file_out) {

@@ -77,7 +77,7 @@ pub(crate) enum Auth2FAMethod {
     #[serde(rename = "Email")]
     Email,
     #[serde(rename = "TOTP")]
-    TOTP,
+    Totp,
 }
 
 /// Saved authentication credentials for callback use.

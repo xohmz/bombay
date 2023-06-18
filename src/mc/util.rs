@@ -105,7 +105,7 @@ impl Display for Platform {
                 Platform::Facebook => "Facebook",
                 Platform::GooglePlay => "Google Play",
                 Platform::Instagram => "Instagram",
-                Platform::Other(unk) => &unk,
+                Platform::Other(unk) => unk,
                 Platform::Patreon => "Patreon",
                 Platform::SoundCloud => "SoundCloud",
                 Platform::Spotify => "Spotify",

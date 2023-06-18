@@ -151,15 +151,15 @@ impl<ClientAuthState> EndpointRelease<'_, ClientAuthState> {
             .remove("Release")
             .ok_or(Error::NotFound("release"))?;
 
-        let release_obj = serde_json::from_value::<AnyRelease>(release_val)
-            .map_err(|err| Error::Deserialization(err))?;
+        let release_obj =
+            serde_json::from_value::<AnyRelease>(release_val).map_err(Error::Deserialization)?;
 
         let tracks_val = related_wrapper
             .remove("Tracks")
             .ok_or(Error::NotFound("release tracks"))?;
 
-        let tracks_obj = serde_json::from_value::<Vec<Track>>(tracks_val)
-            .map_err(|err| Error::Deserialization(err))?;
+        let tracks_obj =
+            serde_json::from_value::<Vec<Track>>(tracks_val).map_err(Error::Deserialization)?;
 
         Ok((release_obj, tracks_obj))
     }
@@ -186,7 +186,7 @@ impl<ClientAuthState> EndpointRelease<'_, ClientAuthState> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::WWW,
-            &format!("release/{catalog_id}/cover"),
+            format!("release/{catalog_id}/cover"),
             None::<HashMap<String, String>>,
         )
     }
@@ -258,7 +258,7 @@ impl<ClientAuthState> EndpointRelease<'_, ClientAuthState> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::Player,
-            &format!("/release/{release_id}/track-stream/{track_id}"),
+            format!("/release/{release_id}/track-stream/{track_id}"),
             None::<HashMap<String, String>>,
         )
     }
@@ -274,7 +274,7 @@ impl EndpointRelease<'_, SignedIn> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::Player,
-            &format!("/release/{release_id}/track-download/{track_id}"),
+            format!("/release/{release_id}/track-download/{track_id}"),
             Some(RequestParameters::from_codec(codec.unwrap_or_default())),
         )
     }

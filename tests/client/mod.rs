@@ -86,13 +86,13 @@ fn about_grant() -> Result<(), Box<dyn error::Error>> {
             release.get_date()
         );
     }
-    println!("");
+    println!();
 
     println!("Follow Grant on: ");
     for link in grant.links.as_ref().unwrap_or(&Vec::new()) {
-        println!("  {} - {}", link.platform.to_string(), link.url.to_string());
+        println!("  {} - {}", link.platform, link.url);
     }
-    println!("");
+    println!();
 
     Ok(())
 }

@@ -124,7 +124,7 @@ fn search_all() -> Result<(), Error> {
 fn get_lani_daye_photo() -> Result<(), Error> {
     let mut reader = CLIENT.artist().get_photo("lanidaye")?;
 
-    let _dir = fs::create_dir_all("downloads").unwrap();
+    fs::create_dir_all("downloads").unwrap();
     let mut file_out = fs::File::create("downloads/lanidaye.jpeg").unwrap();
     match std::io::copy(&mut reader, &mut file_out) {
         Ok(_) => Ok(()),

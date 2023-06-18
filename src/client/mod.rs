@@ -191,7 +191,7 @@ impl<ClientAuthState> Client<ClientAuthState> {
         result: Result<Response, ureq::Error>,
     ) -> Result<RT, Error> {
         match result {
-            Ok(response) => response.into_json::<RT>().map_err(|e| Error::IO(e)),
+            Ok(response) => response.into_json::<RT>().map_err(Error::IO),
             Err(err) => Err(Error::Request(err)),
         }
     }
@@ -222,8 +222,8 @@ impl Client<SignedOut> {
     pub fn sign_in(&mut self, email: String, password: String) -> Result<SignInOutcome, Error> {
         let signin_parameters = SigninParameters {
             auth: None,
-            email: email,
-            password: password,
+            email,
+            password,
         };
 
         let signin_res = self.post::<AuthReply>(
@@ -249,7 +249,7 @@ impl Client<SignedOut> {
                 let mut auth = SavedAuthDetails {
                     email: signin_parameters.email.clone(),
                     email_id: None,
-                    password: signin_parameters.password.clone(),
+                    password: signin_parameters.password,
                 };
 
                 match second_factor {
@@ -261,14 +261,13 @@ impl Client<SignedOut> {
                                     "Bad sign-in response, missing email auth data.",
                                 ))?
                                 .id
-                                .ok_or(Error::SignIn("Bad sign-in response, missing email id."))?
-                                .clone(),
+                                .ok_or(Error::SignIn("Bad sign-in response, missing email id."))?,
                         );
                         self.auth = Some(auth);
 
                         return Ok(SignInOutcome::Email(Self::mfa_callback_email));
                     }
-                    Auth2FAMethod::TOTP => match auth_data.totp {
+                    Auth2FAMethod::Totp => match auth_data.totp {
                         Some(_) => {
                             self.auth = Some(auth);
                             return Ok(SignInOutcome::TOTP(Self::mfa_callback_totp));
@@ -293,7 +292,7 @@ impl Client<SignedOut> {
             TargetAPI::Player,
             "/sign-in",
             None::<HashMap<String, String>>,
-            Some(signin_param.clone()),
+            Some(signin_param),
         ) {
             Ok(_) => self.verify_signin_cookie(),
             Err(Error::Request(ureq::Error::Status(200, _))) => self.verify_signin_cookie(),
@@ -309,8 +308,8 @@ impl Client<SignedOut> {
     ) -> Result<EmailCallback, Error> {
         let signin_parameters = SigninParameters {
             auth: None,
-            email: email,
-            password: password,
+            email,
+            password,
         };
 
         let signin_res = self.post::<AuthDataEmail>(
@@ -323,13 +322,12 @@ impl Client<SignedOut> {
         if let Ok(email_auth_data) = signin_res {
             let id = email_auth_data
                 .id
-                .ok_or(Error::SignIn("Bad sign-in response, missing email id."))?
-                .clone();
+                .ok_or(Error::SignIn("Bad sign-in response, missing email id."))?;
 
             self.auth = Some(SavedAuthDetails {
                 email: signin_parameters.email.clone(),
                 email_id: Some(id),
-                password: signin_parameters.password.clone(),
+                password: signin_parameters.password,
             });
 
             return Ok(Self::mfa_callback_email);
@@ -347,8 +345,8 @@ impl Client<SignedOut> {
     ) -> Result<Client<SignedIn>, Error> {
         let signin_parameters = SigninParameters {
             auth: None,
-            email: email,
-            password: password,
+            email,
+            password,
         };
 
         let signin_res = self.post::<AuthReply>(
@@ -370,17 +368,16 @@ impl Client<SignedOut> {
                 self.auth = Some(SavedAuthDetails {
                     email: signin_parameters.email.clone(),
                     email_id: None,
-                    password: signin_parameters.password.clone(),
+                    password: signin_parameters.password,
                 });
 
-                match second_factor {
-                    Auth2FAMethod::TOTP => return self.mfa_callback_totp(code),
-                    _ => {}
+                if let Auth2FAMethod::Totp = second_factor {
+                    return self.mfa_callback_totp(code);
                 }
             }
         }
 
-        Ok(self.verify_signin_cookie()?)
+        self.verify_signin_cookie()
     }
 
     /// Function to try login with email confirmation after username and password was already provided.
@@ -412,7 +409,7 @@ impl Client<SignedOut> {
             password: auth.password.clone(),
             auth: Some(AuthParameters {
                 email: None,
-                totp: Some(code.clone()),
+                totp: Some(code),
             }),
         })
     }

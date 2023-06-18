@@ -65,7 +65,7 @@ impl<ClientAuthState> EndpointPlaylist<'_, ClientAuthState> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::Player,
-            &format!("/playlist/{playlist_id}/tile"),
+            format!("/playlist/{playlist_id}/tile"),
             None::<HashMap<String, String>>,
         )
     }
@@ -93,7 +93,7 @@ impl<ClientAuthState> EndpointPlaylist<'_, ClientAuthState> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::Player,
-            &format!("/playlist/{playlist_id}/background"),
+            format!("/playlist/{playlist_id}/background"),
             None::<HashMap<String, String>>,
         )
     }
@@ -114,18 +114,15 @@ impl EndpointPlaylist<'_, SignedIn> {
 
     /// Create a playlist.
     pub fn create(&self, playlist: Playlist) -> Result<PlaylistID, Error> {
-        let wrapped_id = self
-            .client
+        self.client
             .post::<Wrapped<PlaylistID>>(
                 TargetAPI::Player,
-                &format!("/playlist"),
+                "/playlist",
                 None::<HashMap<String, String>>,
                 Some(playlist),
             )?
             .remove("Id")
-            .ok_or(Error::NotFound("Playlist not found."));
-
-        wrapped_id
+            .ok_or(Error::NotFound("Playlist not found."))
     }
 
     /// Edit a playlist.
@@ -152,7 +149,7 @@ impl EndpointPlaylist<'_, SignedIn> {
         } else {
             self.client.post_empty_response(
                 TargetAPI::Player,
-                &format!("/playlist/{playlist_id}/modify-item"),
+                format!("/playlist/{playlist_id}/modify-item"),
                 Some(operation),
                 Some(item_mod),
             )
@@ -168,7 +165,7 @@ impl EndpointPlaylist<'_, SignedIn> {
     ) -> Result<(), Error> {
         self.client.post_empty_response(
             TargetAPI::Player,
-            &format!("/playlist/{playlist_id}/modify-items"),
+            format!("/playlist/{playlist_id}/modify-items"),
             Some(operation),
             Some(items_mod),
         )
@@ -178,7 +175,7 @@ impl EndpointPlaylist<'_, SignedIn> {
     pub fn delete(&self, playlist_id: PlaylistID) -> Result<(), Error> {
         self.client.post_empty_response(
             TargetAPI::Player,
-            &format!("/playlist/{playlist_id}/delete"),
+            format!("/playlist/{playlist_id}/delete"),
             None::<HashMap<String, String>>,
             None::<()>,
         )

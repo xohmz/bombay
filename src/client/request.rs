@@ -29,23 +29,23 @@ impl Default for RequestParameters {
     }
 }
 
-impl Into<HashMap<String, String>> for RequestParameters {
-    fn into(self) -> HashMap<String, String> {
+impl From<RequestParameters> for HashMap<String, String> {
+    fn from(val: RequestParameters) -> Self {
         let mut queries = HashMap::new();
 
-        if let Some(format) = self.codec {
+        if let Some(format) = val.codec {
             queries.insert("format".to_owned(), format.to_string());
         }
 
-        if let Some(search) = self.search {
+        if let Some(search) = val.search {
             queries.insert("search".to_owned(), search);
         }
 
-        if let Some(sort) = self.sort {
+        if let Some(sort) = val.sort {
             queries.insert("sort".to_owned(), sort);
         }
 
-        if let Some(pagination) = self.pagination {
+        if let Some(pagination) = val.pagination {
             let pagination_map: HashMap<String, String> = pagination.into();
             queries.extend(pagination_map)
         }
@@ -126,11 +126,11 @@ impl Default for PaginationParameters {
     }
 }
 
-impl Into<HashMap<String, String>> for PaginationParameters {
-    fn into(self) -> HashMap<String, String> {
+impl From<PaginationParameters> for HashMap<String, String> {
+    fn from(val: PaginationParameters) -> Self {
         let mut queries = HashMap::new();
-        queries.insert("limit".to_owned(), self.limit.to_string());
-        queries.insert("offset".to_owned(), self.offset.to_string());
+        queries.insert("limit".to_owned(), val.limit.to_string());
+        queries.insert("offset".to_owned(), val.offset.to_string());
         queries
     }
 }
@@ -158,10 +158,10 @@ impl Display for PlaylistItemOperations {
     }
 }
 
-impl Into<HashMap<String, String>> for PlaylistItemOperations {
-    fn into(self) -> HashMap<String, String> {
+impl From<PlaylistItemOperations> for HashMap<String, String> {
+    fn from(val: PlaylistItemOperations) -> Self {
         let mut queries = HashMap::new();
-        queries.insert("type".to_owned(), self.to_string());
+        queries.insert("type".to_owned(), val.to_string());
         queries
     }
 }
@@ -183,10 +183,10 @@ impl Display for PlaylistItemsOperations {
     }
 }
 
-impl Into<HashMap<String, String>> for PlaylistItemsOperations {
-    fn into(self) -> HashMap<String, String> {
+impl From<PlaylistItemsOperations> for HashMap<String, String> {
+    fn from(val: PlaylistItemsOperations) -> Self {
         let mut queries = HashMap::new();
-        queries.insert("type".to_owned(), self.to_string());
+        queries.insert("type".to_owned(), val.to_string());
         queries
     }
 }

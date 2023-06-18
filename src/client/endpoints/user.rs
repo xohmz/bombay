@@ -23,15 +23,15 @@ impl EndpointUser<'_, SignedIn> {
             .remove("Settings")
             .ok_or(Error::NotFound("user settings"))?;
 
-        let release_obj = serde_json::from_value::<Settings>(settings_val)
-            .map_err(|err| Error::Deserialization(err))?;
+        let release_obj =
+            serde_json::from_value::<Settings>(settings_val).map_err(Error::Deserialization)?;
 
         let user_val = user_info_wrapper
             .remove("User")
             .ok_or(Error::NotFound("user information"))?;
 
         let tracks_obj =
-            serde_json::from_value::<User>(user_val).map_err(|err| Error::Deserialization(err))?;
+            serde_json::from_value::<User>(user_val).map_err(Error::Deserialization)?;
 
         Ok((release_obj, tracks_obj))
     }
@@ -177,7 +177,7 @@ impl EndpointUser<'_, SignedIn> {
     pub fn remove_license(&self, license_id: LicenseID) -> Result<(), Error> {
         self.client.post_empty_response(
             TargetAPI::Player,
-            &format!("/self/license/{license_id}/delete"),
+            format!("/self/license/{license_id}/delete"),
             None::<HashMap<String, String>>,
             None::<()>,
         )
@@ -187,9 +187,9 @@ impl EndpointUser<'_, SignedIn> {
     pub fn remove_video_claim(&self, video_id: String) -> Result<(), Error> {
         self.client.post_empty_response(
             TargetAPI::Player,
-            &format!("/me/remove-claims"),
+            "/me/remove-claims",
             None::<HashMap<String, String>>,
-            Some(ClaimVideoId { video_id: video_id }),
+            Some(ClaimVideoId { video_id }),
         )
     }
 

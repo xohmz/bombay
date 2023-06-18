@@ -134,7 +134,7 @@ fn stream_no_service() -> Result<(), Error> {
         &TrackID(uuid!("6b5401bc-06d0-41e8-ab16-7742f2aa40bf")),
     )?;
 
-    let _dir = fs::create_dir_all("downloads").unwrap();
+    fs::create_dir_all("downloads").unwrap();
     let mut file_out = fs::File::create("downloads/far_out.mp3").unwrap();
 
     match std::io::copy(&mut reader, &mut file_out) {
@@ -152,7 +152,7 @@ fn download_every_little_thing() -> Result<(), Error> {
         Some(Codec::FLAC),
     )?;
 
-    let _dir = fs::create_dir_all("downloads").unwrap();
+    fs::create_dir_all("downloads").unwrap();
     let mut file_out = fs::File::create("downloads/everything_little_thing_flac.flac").unwrap();
 
     match std::io::copy(&mut reader, &mut file_out) {
@@ -167,7 +167,7 @@ fn download_feelings_cover_art() -> Result<(), Error> {
         .release()
         .get_cover_art(&CatalogID("742779546913".to_owned()))?;
 
-    let _dir = fs::create_dir_all("downloads").unwrap();
+    fs::create_dir_all("downloads").unwrap();
     let mut file_out = fs::File::create("downloads/feelings_cover_art.jpeg").unwrap();
 
     match std::io::copy(&mut reader, &mut file_out) {

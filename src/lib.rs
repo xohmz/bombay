@@ -60,7 +60,7 @@
 //!             30,
 //!             totp_secret.to_bytes().unwrap(),
 //!         )
-//!         .unwrap(); 
+//!         .unwrap();
 //!         totp_callback(&mut client_unauth, totp_gen.generate_current().unwrap())
 //!     }
 //! }
@@ -109,7 +109,7 @@
 //!     .to_owned();
 //!     println!("{}:\n{}\n", &grant.name, about_grant.unwrap_or(&alt_about));
 //!
-//! 
+//!
 //!     if let Some(active_years) = &grant.active_years {
 //!         let years: Vec<String> = active_years
 //!             .iter()
@@ -150,14 +150,14 @@
 //!             release.get_date()
 //!         );
 //!     }
-//!     println!("");
+//!     println!();
 //!
 //!     if let Some(links) = &grant.links {
 //!         println!("Follow Grant on: ");
 //!         for link in links {
 //!             println!("  {} - {}", link.platform.to_string(), link.url.to_string());
 //!         }
-//!         println!("");
+//!         println!();
 //!     }
 //!
 //!     Ok(())

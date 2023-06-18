@@ -30,7 +30,7 @@ impl<ClientAuthState> EndpointMood<'_, ClientAuthState> {
     /// Example URL: <https://player.monstercat.app/api/moods>
     pub fn get_all(&self, parameters: Option<RequestParameters>) -> Result<Paginated<Mood>, Error> {
         self.client
-            .get::<Wrapped<Paginated<Mood>>>(TargetAPI::Player, &format!("/moods"), parameters)?
+            .get::<Wrapped<Paginated<Mood>>>(TargetAPI::Player, "/moods", parameters)?
             .remove("Moods")
             .ok_or(Error::NotFound("all moods"))
     }

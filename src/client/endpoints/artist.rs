@@ -109,7 +109,7 @@ impl<ClientAuthState> EndpointArtist<'_, ClientAuthState> {
     ) -> Result<Box<dyn std::io::Read + Send + Sync>, Error> {
         self.client.get_reader(
             TargetAPI::WWW,
-            &format!("artist/{artist_name_uri}/photo"),
+            format!("artist/{artist_name_uri}/photo"),
             None::<HashMap<String, String>>,
         )
     }

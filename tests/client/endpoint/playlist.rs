@@ -104,7 +104,7 @@ fn many_playlist_tests() -> Result<(), Error> {
         })
         .collect();
 
-    let mut new_playlist = playlist.clone();
+    let mut new_playlist = playlist;
     new_playlist.title = "TestDuplicate".to_owned();
 
     let new_playlist_id = playlist_endpoint.create(new_playlist)?;

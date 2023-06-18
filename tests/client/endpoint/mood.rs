@@ -13,7 +13,7 @@ fn find_and_fetch_all() -> Result<(), Error> {
     for mood in &all_moods {
         println!("  {} ({})", mood.name, mood.id)
     }
-    println!("");
+    println!();
 
     println!("Fetching all moods:");
     for mood in &all_moods {
@@ -31,7 +31,7 @@ fn find_and_fetch_all() -> Result<(), Error> {
             );
         }
     }
-    println!("");
+    println!();
 
     Ok(())
 }
