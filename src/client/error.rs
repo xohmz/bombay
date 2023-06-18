@@ -4,7 +4,7 @@ use std::fmt::Display;
 #[derive(Debug)]
 pub enum Error {
     IO(std::io::Error),
-    Request(ureq::Error),
+    Request(Box<ureq::Error>),
     Deserialization(serde_json::Error),
     Message(&'static str),
     NotFound(&'static str),

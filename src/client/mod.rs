@@ -103,7 +103,7 @@ impl<ClientAuthState> Client<ClientAuthState> {
 
         match response {
             Ok(res) => Ok(res.into_reader()),
-            Err(err) => Err(Error::Request(err)),
+            Err(err) => Err(Error::Request(Box::new(err))),
         }
     }
 
@@ -192,7 +192,7 @@ impl<ClientAuthState> Client<ClientAuthState> {
     ) -> Result<RT, Error> {
         match result {
             Ok(response) => response.into_json::<RT>().map_err(Error::IO),
-            Err(err) => Err(Error::Request(err)),
+            Err(err) => Err(Error::Request(Box::new(err))),
         }
     }
 
@@ -200,7 +200,7 @@ impl<ClientAuthState> Client<ClientAuthState> {
     fn process_empty_response(&self, result: Result<Response, ureq::Error>) -> Result<(), Error> {
         match result {
             Ok(_) => Ok(()),
-            Err(err) => Err(Error::Request(err)),
+            Err(err) => Err(Error::Request(Box::new(err))),
         }
     }
 }
@@ -295,7 +295,10 @@ impl Client<SignedOut> {
             Some(signin_param),
         ) {
             Ok(_) => self.verify_signin_cookie(),
-            Err(Error::Request(ureq::Error::Status(200, _))) => self.verify_signin_cookie(),
+            Err(Error::Request(boxed_err)) => match *boxed_err {
+                ureq::Error::Status(200, _) => self.verify_signin_cookie(),
+                _ => Err(Error::Request(boxed_err)),
+            },
             Err(err) => Err(err),
         }
     }
