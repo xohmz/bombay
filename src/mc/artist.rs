@@ -8,9 +8,9 @@ use uuid::Uuid;
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(untagged)]
 pub enum AnyArtist {
-    Artist(Artist),
-    AlbumArtist(AlbumArtist),
-    ReleaseArtist(ReleaseArtist),
+    Artist(Box<Artist>),
+    AlbumArtist(Box<AlbumArtist>),
+    ReleaseArtist(Box<ReleaseArtist>),
 }
 
 /// Most detailed artist object returned by the MC API.
