@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  CARGO_TERM_COLOR: always
-  MC_EMAIL: ${{ secrets.MC_EMAIL }}
-  MC_PASSWORD: ${{ secrets.MC_PASSWORD }}
-  MC_TOTP_SECRET: ${{ secrets.MC_TOTP_SECRET }}
-
 jobs:
   build:
 
@@ -22,10 +16,15 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Run tests
+      env:
+        CARGO_TERM_COLOR: always
+        MC_EMAIL: ${{ secrets.MC_EMAIL }}
+        MC_PASSWORD: ${{ secrets.MC_PASSWORD }}
+        MC_TOTP_SECRET: ${{ secrets.MC_TOTP_SECRET }}
+        RUSTFLAGS: "-Cinstrument-coverage"
       run: cargo test --verbose
     - name: Run coverage
       env:
-        RUSTFLAGS: "-Cinstrument-coverage"
         LLVM_PROFILE_FILE: "bombay-%p-%m.profraw"
       run: |
         rustup component add llvm-tools-preview 
