@@ -1,6 +1,7 @@
 # Bombay - Monstercat API Bindings
 
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/xohmz/bombay/rust.yml?branch=main)
+![Codecov branch](https://img.shields.io/codecov/c/github/xohmz/bombay/main)
 ![Crates.io](https://img.shields.io/crates/v/bombay)
 ![Crates.io (latest)](https://img.shields.io/crates/dv/bombay)
 
