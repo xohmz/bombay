@@ -21,7 +21,7 @@ serde = { version = "1.0" }
 serde_json = "1.0"
 serde_repr = "0.1"
 serde_with = "3.4"
-ureq = { version = "2.7", features = ["json", "cookies"] }
+ureq = { version = "2.9", features = ["json", "cookies"] }
 uuid = { version = "1.4", features = ["serde"] }
 url = { version = "2.4", features = ["serde"] }
 iso8601-timestamp = { version = "0.2", features = ["serde"] }
