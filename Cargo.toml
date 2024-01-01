@@ -28,5 +28,5 @@ iso8601-timestamp = { version = "0.2", features = ["serde"] }
 
 [dev-dependencies]
 lazy_static = "1.4"
-totp-rs = "5.3"
+totp-rs = "5.4"
 test-with = { version = "0.10", default-features = false, features = ["resource"] }
