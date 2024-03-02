@@ -88,17 +88,14 @@
 //!         .data
 //!         .ok_or(Error::Message("Oh no! Where did Grant go?!"))?;
 //!
-//!     // And not empty data!.
+//!     // And Grant should be in there.
+//!     let grant_id = uuid!("27063fd3-4fba-4119-9af0-5001e925b0d2");
 //!     let grant = artists
-//!         .get(0)
-//!         .ok_or(Error::Message("Oh no! Where did Grant go?!"))?;
-//!
-//!     // Lets make sure it's him.
-//!     if grant.id != uuid!("27063fd3-4fba-4119-9af0-5001e925b0d2") {
-//!         return Err(Box::new(Error::Message(
-//!             "We found someone, but not Grant! Hmmm...",
-//!         )));
-//!     }
+//!         .iter()
+//!         .find(|artist| artist.id == grant_id)
+//!         .ok_or(Error::Message(
+//!             "Expected to find Grant in list of artist search results.",
+//!         ))?;
 //!
 //!     // Alright lets learn about Grant!
 //!    let about_grant = grant.about.as_ref();
