@@ -1105,9 +1105,9 @@ checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
 
 [[package]]
 name = "test-with"
-version = "0.12.5"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dfd8aa5ba71c1db325a13d6e5e22bd687587f20a31ee95a2d4e66a1f81425763"
+checksum = "ba1247cafc10bd1f42078931ffdc64dfac09c81304e069ce26225bec1953e230"
 dependencies = [
  "byte-unit",
  "num_cpus",
